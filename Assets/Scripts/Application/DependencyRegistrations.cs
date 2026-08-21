@@ -1,4 +1,6 @@
 
+using Unity.VisualScripting;
+
 public static class DependencyRegistrations
 {
     public static GameAppBuilder Add(this GameAppBuilder builder, ISceneLoader sceneLoader)
@@ -22,9 +24,25 @@ public static class DependencyRegistrations
         return builder;
     }
 
-    public static GameAppBuilder Add(this GameAppBuilder builder, ScenePathSO pathSO)
+    public static GameAppBuilder Add(this GameAppBuilder builder, StartupScenes scenes)
     {
-        builder.RegisterScenePathSO(pathSO);
+        builder.RegisterStartupScenes(scenes);
+        return builder;
+    }
+
+    public static GameAppBuilder Add(this GameAppBuilder builder, IAuthenticationClient authenticationClient)
+    {
+        builder.RegisterAuthenticationClient(authenticationClient);
+        return builder;
+    }
+    public static GameAppBuilder Add(this GameAppBuilder builder, IPlayerProfileClient playerProfileClient)
+    {
+        builder.RegisterPlayerProfileClient(playerProfileClient);
+        return builder;
+    }
+    public static GameAppBuilder Add(this GameAppBuilder builder, IAuthenticationSessionStore authenticationSessionStore)
+    {
+        builder.RegisterAuthenticationSessionStore(authenticationSessionStore);
         return builder;
     }
 }

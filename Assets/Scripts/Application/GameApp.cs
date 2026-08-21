@@ -4,25 +4,28 @@ using System.Threading.Tasks;
 public sealed class GameApp
 {
     private readonly ISceneFlowController _sceneFlowController;
-    private ScenePathSO _pathSO;
+    private readonly IAuthenticationService _authenticationService;
+    private readonly StartupScenes _startupScenes;
     private bool _hasStarted;
 
-    public GameApp(ISceneFlowController sceneFlowController, ScenePathSO pathSO)
+    public GameApp(ISceneFlowController sceneFlowController, IAuthenticationService authenticationService, StartupScenes startupScenes)
     {
         _sceneFlowController = sceneFlowController ?? throw new ArgumentNullException(nameof(sceneFlowController));
 
-        _pathSO = pathSO ?? throw new ArgumentNullException(nameof(pathSO));
+        _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+        _startupScenes = startupScenes;
     }
 
-    public Task StartAsync(CancellationToken ct = default)
+    public async Task StartAsync(CancellationToken ct = default)
     {
-        if (_hasStarted) return Task.CompletedTask;
+        if (_hasStarted) return;
 
         _hasStarted = true;
+        bool sessionRestored = await _authenticationService.TryRestoreSessionAsync(ct);
         ct.ThrowIfCancellationRequested();
+        ScenePathSO startScene = sessionRestored ? _startupScenes.MainMenuSO: _startupScenes.LoginSceneSO;
+        _sceneFlowController.ChangePrimaryScene(startScene);
 
-        _sceneFlowController.ChangePrimaryScene(_pathSO);
-
-        return Task.CompletedTask;
+        return;
     }
 }

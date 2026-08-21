@@ -314,7 +314,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BootstrapCompositionRoot
   _sceneFlowController: {fileID: 3177507004148794677}
   _loadingScreenController: {fileID: 2076821601987512555}
-  _pathSO: {fileID: 11400000, guid: e74aa479157506540952d96f36f6e3fb, type: 2}
+  _mainMenuSO: {fileID: 11400000, guid: e74aa479157506540952d96f36f6e3fb, type: 2}
+  _loginSceneSO: {fileID: 11400000, guid: 7ac1cecb995bbb740a6f2a2b9fb8f571, type: 2}
+  _networkSettingsSO: {fileID: 11400000, guid: ea0d5c1fa5ece4c4c97c54b7598eff0d, type: 2}
 --- !u!1 &3976224205356193496
 GameObject:
   m_ObjectHideFlags: 0
