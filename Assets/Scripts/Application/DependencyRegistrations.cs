@@ -1,8 +1,11 @@
 
-using Unity.VisualScripting;
-
 public static class DependencyRegistrations
 {
+    public static GameAppBuilder Add(this GameAppBuilder builder, IMatchResultSink matchResultSink)
+    {
+        builder.RegisterMatchResultSink(matchResultSink);
+        return builder;
+    }
     public static GameAppBuilder Add(this GameAppBuilder builder, ISceneLoader sceneLoader)
     {
         builder.RegisterSceneLoader(sceneLoader);

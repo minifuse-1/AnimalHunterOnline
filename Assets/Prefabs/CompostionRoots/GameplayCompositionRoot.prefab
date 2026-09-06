@@ -237,12 +237,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayCompositionRoot
   _playerPrefab: {fileID: 8814055687043296087, guid: 3428475b87cac624a9a5b2c7ae8c128d, type: 3}
+  _goalTrigger: {fileID: 8109115349219296187}
   _playerInputSource: {fileID: 2463615726762426635}
   _playerCommandProducer: {fileID: 5320520692709215219}
   _spawnPoints:
   - {fileID: 8425886613761491144}
   - {fileID: 938254513994786730}
   _gameplayUISceneSO: {fileID: 11400000, guid: e7600f93878c20e48ad60673796b0449, type: 2}
+  _postMatchSceneSO: {fileID: 11400000, guid: e74aa479157506540952d96f36f6e3fb, type: 2}
 --- !u!1 &6439763259169946868
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,3 +402,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2728286574230101652, guid: f6e37ee99f9aae6448417f5f5be45b39, type: 3}
   m_PrefabInstance: {fileID: 4066049570355433554}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8109115349219296187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5252569324363191273, guid: f6e37ee99f9aae6448417f5f5be45b39, type: 3}
+  m_PrefabInstance: {fileID: 4066049570355433554}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21e258c87526d854693203f68ce22e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoalTrigger

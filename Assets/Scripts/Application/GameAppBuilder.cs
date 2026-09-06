@@ -9,6 +9,15 @@ public sealed class GameAppBuilder
     private IAuthenticationSessionStore _authSessionStore;
     private IPlayerProfileClient _profileClient;
     private StartupScenes _startupScenes;
+    private IMatchResultSink _matchResultSink;
+
+    public void RegisterMatchResultSink(IMatchResultSink matchResultSink)
+    {
+        if (_matchResultSink != null)
+            throw new InvalidOperationException(nameof(RegisterMatchResultSink));
+
+        _matchResultSink = matchResultSink;
+    }
     
     public void RegisterAuthenticationClient(IAuthenticationClient authClient)
     {
@@ -64,9 +73,16 @@ public sealed class GameAppBuilder
 
         PlayerProfileService profileService = new();
         AuthenticationService authenticationService = new(_authClient, _profileClient, _authSessionStore, profileService);
+        GameplaySessionService gameplaySessionService = new();
         _sceneFlowController.Bind(_sceneLoader);
         _loadingScreenController.Bind(_sceneFlowController);
-        AppDependencies appDependencies = new(_sceneFlowController, authenticationService, profileService);
+        AppDependencies appDependencies = new(
+            _sceneFlowController, 
+            authenticationService, 
+            profileService, 
+            _matchResultSink, 
+            gameplaySessionService
+            );
         
         _sceneFlowController.Initialize(appDependencies);
 
@@ -75,6 +91,13 @@ public sealed class GameAppBuilder
 
     private bool HasValidRefs()
     {
-        return _sceneFlowController != null && _sceneLoader != null && _loadingScreenController != null && _authClient != null && _authSessionStore != null && _profileClient != null;
+        return 
+            _sceneFlowController != null 
+            && _sceneLoader != null 
+            && _loadingScreenController != null 
+            && _authClient != null 
+            && _authSessionStore != null 
+            && _profileClient != null
+            && _matchResultSink != null;
     }
 }

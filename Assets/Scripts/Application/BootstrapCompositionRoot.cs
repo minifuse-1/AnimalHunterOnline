@@ -16,12 +16,17 @@ public sealed class BootstrapCompositionRoot : MonoBehaviour
         if (_loadingScreenController == null) throw new ArgumentNullException(nameof(_loadingScreenController));
         if (_mainMenuSO == null) throw new ArgumentNullException(nameof(_mainMenuSO));
         if (_loginSceneSO == null) throw new ArgumentNullException(nameof(_loginSceneSO));
-        GameAppBuilder appBuilder = new();
+
+        string authPath = Path.Combine(Application.persistentDataPath, AppConstants.Auth.DataPath);
+        string matchResultPath = Path.Combine(Application.persistentDataPath, AppConstants.MatchHistory.DataPath);
+
         NodeClient nodeClient = new(_networkSettingsSO.BaseURL);
         IAuthenticationClient authenticationClient = nodeClient;
         IPlayerProfileClient profileClient = nodeClient;
-        string authPath = Path.Combine(Application.persistentDataPath, AppConstants.Auth.DataPath);
         IAuthenticationSessionStore authenticationSessionStore = new JsonAuthenticationSessionStore(authPath);
+        IMatchResultSink matchResultSink = new JsonMatchResultSink(matchResultPath);
+
+        GameAppBuilder appBuilder = new();
         _app = appBuilder
         .Add(new SceneLoader())
         .Add(_sceneFlowController)
@@ -30,6 +35,7 @@ public sealed class BootstrapCompositionRoot : MonoBehaviour
         .Add(authenticationClient)
         .Add(profileClient)
         .Add(authenticationSessionStore)
+        .Add(matchResultSink)
         .Build();
 
         Debug.Log($"Authentication session path: {authPath}");

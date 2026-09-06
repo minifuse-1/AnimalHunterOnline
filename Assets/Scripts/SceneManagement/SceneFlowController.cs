@@ -57,7 +57,7 @@ public sealed class SceneFlowController : MonoBehaviour, ISceneFlowController, I
         ProgressChanged?.Invoke(0f);
 
         Scene previousPrimaryScene = _primaryScene;
-        List<Scene> prevSecondaryScenes = _secondaryScenes;
+        List<Scene> prevSecondaryScenes = new(_secondaryScenes);
 
         AsyncOperation loadingOperation = _sceneLoader.loadAdditivelyAsync(pathSO);
         yield return TrackProgressCoroutine(loadingOperation, 0f, 0.8f);
